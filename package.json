@@ -1,0 +1,27 @@
+{
+  "type": "module",
+  "name": "poyecto-final-n2",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "nodemon src/index.js",
+    "start": "node ./src/index.js"
+  },
+  "keywords": [],
+  "author": "Gabriel Ferrin",
+  "license": "ISC",
+  "description": "Proyecto final de FUNVAL nivel 2",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "^3.9.8"
+  },
+  "devDependencies": {
+    "standard": "^17.1.0"
+  },
+  "eslintConfig": {
+    "extends": "./node_modules/standard/eslintrc.json"
+  }
+}
