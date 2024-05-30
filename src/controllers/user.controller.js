@@ -68,7 +68,7 @@ export const getUser = async (req, res) => {
       return res.status(404).json({ success: false, message })
     }
     // get user
-    const query = 'SELECT * FROM v_users WHERE user_id = ?'
+    const query = 'SELECT * FROM v_user WHERE user_id = ?'
     const [results] = await sql.execute(query, [userId])
     if (results.length === 0) {
       const message = 'User not found'
@@ -91,7 +91,7 @@ export const getAllUsers = async (req, res) => {
       const message = 'Unauthorized'
       return res.status(401).json({ success: false, message })
     }
-    const query = 'SELECT * FROM v_users'
+    const query = 'SELECT * FROM v_user'
     const [results] = await sql.execute(query)
     res.json({ success: true, results })
   } catch (error) {
