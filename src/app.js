@@ -7,6 +7,7 @@ import userRoutes from './routes/user.routes.js'
 import postRoutes from './routes/post.routes.js'
 import commentRoutes from './routes/comment.routes.js'
 import rolesRoutes from './routes/role.routes.js'
+import categoryRoutes from './routes/category.routes.js'
 
 // config
 const app = express()
@@ -23,6 +24,8 @@ app.use('/api/post', postRoutes)
 app.use('/api/comment', commentRoutes)
 // roles
 app.use('/api/role', rolesRoutes)
+// categories
+app.use('/api/category', categoryRoutes)
 // helpers
 app.use('/api/helper', helperRoutes)
 

@@ -100,9 +100,10 @@ export const getAllUsers = async (req, res) => {
   }
 }
 
-const isAdmin = async (userId) => {
+export const isAdmin = async (userId) => {
   const query = 'SELECT role_id FROM user WHERE user_id = ?'
   const [results] = await sql.execute(query, [userId])
+  if (results.length === 0) return false
   if (results[0].role_id === 1) return true
   return false
 }

@@ -7,6 +7,7 @@ VIEW `railway`.`v_post` AS
         `a`.`post_id` AS `post_id`,
         `a`.`title` AS `title`,
         `a`.`content` AS `content`,
+        `b`.`user_id` AS `user_id`,
         `b`.`name` AS `user`
     FROM
         (`railway`.`post` `a`

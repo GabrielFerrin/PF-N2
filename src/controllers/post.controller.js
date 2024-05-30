@@ -100,15 +100,9 @@ export const getAllPosts = async (req, res) => {
 
 export const getPostsByCategory = async (req, res) => {
   try {
-    const { category } = req.query
-    const query = 'SELECT * FROM post WHERE category LIKE (%?%)'
-    const [results] = await sql.execute(query, [category])
-    if (results.length > 0) {
-      await Promise.all(results.map(async (post, index) => {
-        const [user] = await sql.execute(query, [post.user_id])
-        post.user = user[0].name
-      }))
-    }
+    const { categoryId } = req.query
+    const query = 'SELECT * FROM v_post_by_cat WHERE category_id = ?'
+    const [results] = await sql.execute(query, [categoryId])
     res.json({ success: true, results })
   } catch (error) {
     const message = 'Error getting posts'

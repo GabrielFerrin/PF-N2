@@ -135,7 +135,7 @@ export const createCategoryTable = async () => {
   try {
     const query = `CREATE TABLE IF NOT EXISTS category (
       category_id INT NOT NULL AUTO_INCREMENT,
-      name VARCHAR(50) NOT NULL,
+      name VARCHAR(50) NOT NULL UNIQUE,
       is_deleted TINYINT NOT NULL DEFAULT 0,
       date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
       date_updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
