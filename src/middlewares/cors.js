@@ -1,6 +1,6 @@
 const allowedOrigins = new Set([
   'http://127.0.0.1:3011',
-  'pf-n2.onrender.com'
+  'https://pf-n2.onrender.com'
 ])
 
 export const corsMiddleware = (req, res, next) => {

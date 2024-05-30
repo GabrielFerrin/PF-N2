@@ -5,7 +5,7 @@
     "description": "Proyecto Final Nivel 2",
     "version": "1.0.0"
   },
-  "host": "https://pf-n2.onrender.com",
+  "host": "pf-n2.onrender.com",
   "basePath": "/",
   "schemes": [
     "http"
