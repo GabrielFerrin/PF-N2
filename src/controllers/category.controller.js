@@ -106,6 +106,10 @@ export const deleteCategory = async (req, res) => {
       return res.status(404).json({ success: false, message })
     }
     message = 'Error deleting category'
-    return res.status(500).json({ success: false, message, error: error.stack })
+    return res.status(500).json({
+      success: false,
+      message,
+      error: error.stack
+    })
   }
 }

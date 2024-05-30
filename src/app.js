@@ -29,4 +29,14 @@ app.use('/api/category', categoryRoutes)
 // helpers
 app.use('/api/helper', helperRoutes)
 
+app.use((req, res) => {
+  res.status(404).send({ success: false, message: 'Route not found' })
+})
+
+// error handler
+app.use((err, req, res, next) => {
+  console.log(err.stack)
+  res.status(500).send({ success: false, message: err.message })
+})
+
 export default app
