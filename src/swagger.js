@@ -5,7 +5,7 @@ const doc = {
     title: 'Sistema de Blogging FUNVAL',
     description: 'Proyecto Final Nivel 2'
   },
-  host: 'pf-n2.onrender.com'
+  host: 'https://pf-n2.onrender.com'
 }
 
 const outputFile = './swagger-output.json'
