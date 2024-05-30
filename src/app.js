@@ -8,6 +8,8 @@ import postRoutes from './routes/post.routes.js'
 import commentRoutes from './routes/comment.routes.js'
 import rolesRoutes from './routes/role.routes.js'
 import categoryRoutes from './routes/category.routes.js'
+import swaggerUi from 'swagger-ui-express'
+import jsonDoc from './swagger-output.json' assert { type: 'json' }
 
 // config
 const app = express()
@@ -15,6 +17,8 @@ app.use(express.json())
 app.use(morgan('dev'))
 app.use(corsMiddleware)
 app.options('*', corsOptions)
+// swagger
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(jsonDoc))
 
 // users
 app.use('/api/user', userRoutes)
