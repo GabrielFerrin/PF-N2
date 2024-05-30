@@ -18,7 +18,7 @@ export const createUser = async (req, res) => {
     return resutl.json({ success: true, message, id: resutl.insertId })
   } catch (error) {
     const message = 'Error creating user'
-    return res.status(500).json({ success: false, message, error })
+    return res.status(500).json({ success: false, message, error: error.stack })
   }
 }
 
