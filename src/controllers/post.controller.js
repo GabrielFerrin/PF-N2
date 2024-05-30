@@ -87,8 +87,16 @@ export const getAllPosts = async (req, res) => {
         query = 'SELECT * FROM v_post_category WHERE post_id = ?'
         const [categories] = await sql.execute(query, [post.post_id])
         const categoryNames = []
-        categories.forEach(category => categoryNames.push(category.name))
+        categories.forEach(category => categoryNames
+          .push(category.name))
         post.categories = categoryNames
+        query = 'SELECT * FROM v_comment WHERE post_id = ?'
+        const [commentsRes] = await sql.execute(query, [post.post_id])
+        const comments = []
+        commentsRes.forEach(comment => {
+          comments.push(comment)
+        })
+        post.comments = comments
       }))
     }
     res.json({ success: true, results })
