@@ -30,7 +30,6 @@ export const createPost = async (req, res) => {
       return res.status(400).json({ success: false, message, errorList })
     }
     delete req.body.categories
-    console.log(categories)
     // create post
     let query = 'INSERT INTO post SET ?'
     const [result] = await sql.query(query, [req.body])
@@ -175,7 +174,6 @@ export const updatePost = async (req, res) => {
       return res.status(404).json(ouwnership)
     }
     if (!req.body.title && !req.body.content) {
-      console.log(req.body)
       message = 'Iformation to update is missing'
       return res.status(404).json({ success: false, message })
     }
@@ -185,7 +183,6 @@ export const updatePost = async (req, res) => {
     message = 'Post updated'
     return res.json({ success: true, message })
   } catch (error) {
-    console.log(error)
     message = 'Error updating post'
     return res.status(500).json({
       success: false,
@@ -196,11 +193,8 @@ export const updatePost = async (req, res) => {
 }
 
 const verifyOwnership = async (userId, postId) => {
-  console.log(userId, postId)
-  console.log('user id', userId, 'post id', postId)
   const query = 'SELECT user_id FROM post WHERE post_id = ?'
   const [result] = await sql.query(query, [postId])
-  console.log(result)
   if (result[0]?.user_id.toString() !== userId || result.length === 0) {
     const message = 'The user is not the owner of this post'
     return { success: false, message }

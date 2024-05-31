@@ -99,11 +99,8 @@ export const updateComment = async (req, res) => {
 }
 
 const verifyOwnership = async (userId, commentId) => {
-  console.log(userId, commentId)
-  console.log('user id', userId, 'comment id', commentId)
   const query = 'SELECT user_id FROM comment WHERE comment_id = ?'
   const [result] = await sql.query(query, [commentId])
-  console.log(result)
   if (result[0]?.user_id.toString() !== userId || result.length === 0) {
     const message = 'The user is not the owner of this comment'
     return { success: false, message }

@@ -169,12 +169,17 @@ export const updateUser = async (req, res) => {
       .map(key => `${key} = ?`).join(', ')
     const values = [...Object.values(req.body), userId]
     const query = `UPDATE user SET ${queryParams} WHERE user_id = ?`
+    console.log({ query, values })
     await sql.execute(query, values)
     message = 'User updated'
     return res.json({ success: true, message })
   } catch (error) {
     message = 'Error updating user'
-    return res.status(500).json({ success: false, message, error })
+    return res.status(500).json({
+      success: false,
+      message,
+      error: error.stack
+    })
   }
 }
 
@@ -206,8 +211,6 @@ const validateEmailUpdate = async (userId, email, errorList) => {
     // validate email uniqueness
     const query = `SELECT * FROM user WHERE email = '${email}'`
     const [res] = await sql.execute(query)
-    console.log('res', res[0].user_id)
-    console.log('userId', userId)
     if (res.length > 0 && res[0].user_id.toString() !== userId) {
       errorList.push('Email already exists')
     }
