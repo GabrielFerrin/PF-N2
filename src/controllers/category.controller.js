@@ -3,6 +3,19 @@ import { isAdmin } from './user.controller.js'
 
 // CREATE
 export const createCategory = async (req, res) => {
+  /* #swagger.tags = ['Categorías']
+    #swagger.description = 'Crea una nueva categoria.' */
+  /*  #swagger.parameters['userId'] = {
+            in: 'query',
+            description: 'User id',
+            type: 'number'
+    } */
+  /*  #swagger.parameters['body'] = {
+            in: 'body',
+            schema: {
+                $name: 'Estudios Superiores',
+            }
+    } */
   let message = 'Missing user id'
   try {
     const { userId } = req.query
@@ -10,7 +23,7 @@ export const createCategory = async (req, res) => {
       return res.status(400).json({ success: false, message })
     }
     if (!await isAdmin(userId)) {
-      const message = 'Unauthorized'
+      const message = 'User is not admin. Unauthorized'
       return res.status(401).json({ success: false, message })
     }
     // validate body
@@ -43,6 +56,8 @@ const validateFields = async (body, errorList) => {
 
 // READ
 export const getAllCategories = async (req, res) => {
+  /* #swagger.tags = ['Categorías']
+    #swagger.description = 'Devuelve todas las categorías.' */
   try {
     const query = 'SELECT * FROM category'
     const [result] = await sql.query(query)
@@ -55,6 +70,24 @@ export const getAllCategories = async (req, res) => {
 
 // UPDATE
 export const updateCategory = async (req, res) => {
+  /* #swagger.tags = ['Categorías']
+    #swagger.description = 'Actualiza una categoria.' */
+  /*  #swagger.parameters['userId'] = {
+            in: 'query',
+            description: 'User id',
+            type: 'number'
+    } */
+  /*  #swagger.parameters['categoryId'] = {
+            in: 'query',
+            description: 'Category id',
+            type: 'number'
+    } */
+  /*  #swagger.parameters['body'] = {
+            in: 'body',
+            schema: {
+                $name: 'Educación',
+            }
+    } */
   let message = 'Missing information'
   try {
     const { userId, categoryId } = req.query
@@ -62,7 +95,7 @@ export const updateCategory = async (req, res) => {
       return res.status(400).json({ success: false, message })
     }
     if (!await isAdmin(userId)) {
-      const message = 'Unauthorized'
+      const message = 'User is not admin. Unauthorized'
       return res.status(401).json({ success: false, message })
     }
     // validate body
@@ -85,6 +118,13 @@ export const updateCategory = async (req, res) => {
 
 // DELETE
 export const deleteCategory = async (req, res) => {
+  /* #swagger.tags = ['Categorías']
+    #swagger.description = 'Elimina una categoria.' */
+  /*  #swagger.parameters['userId'] = {
+            in: 'query',
+            description: 'User id',
+            type: 'number'
+    } */
   let message = 'Missing information'
   try {
     const { userId, categoryId } = req.query
@@ -92,7 +132,7 @@ export const deleteCategory = async (req, res) => {
       return res.status(400).json({ success: false, message })
     }
     if (!await isAdmin(userId)) {
-      const message = 'Unauthorized'
+      const message = 'User is not admin. Unauthorized'
       return res.status(401).json({ success: false, message })
     }
     // delete category

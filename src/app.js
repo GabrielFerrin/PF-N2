@@ -6,7 +6,6 @@ import helperRoutes from './routes/helper.routes.js'
 import userRoutes from './routes/user.routes.js'
 import postRoutes from './routes/post.routes.js'
 import commentRoutes from './routes/comment.routes.js'
-import rolesRoutes from './routes/role.routes.js'
 import categoryRoutes from './routes/category.routes.js'
 import swaggerUi from 'swagger-ui-express'
 import jsonDoc from './swagger-output.json' assert { type: 'json' }
@@ -26,8 +25,6 @@ app.use('/api/user', userRoutes)
 app.use('/api/post', postRoutes)
 // comments
 app.use('/api/comment', commentRoutes)
-// roles
-app.use('/api/role', rolesRoutes)
 // categories
 app.use('/api/category', categoryRoutes)
 // helpers

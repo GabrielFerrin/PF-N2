@@ -2,6 +2,21 @@ import sql from '../db-config.js'
 
 // CREATE
 export const createUser = async (req, res) => {
+  /* #swagger.tags = ['Users']
+    #swagger.description = 'Crea un nuevo usuario.' */
+  /*  #swagger.parameters['body'] = {
+            in: 'body',
+            description: '1: Administrador, 2: Usuario',
+            schema: {
+                $name: 'Gabriel Ferrin',
+                $email: 'gabriel@ferrin.com',
+                $password: '12345678',
+                $role_id: 1,
+                $country_id: 1,
+                $bio: 'bio',
+                $image: 'image'
+            }
+    } */
   try {
     // validate body
     const errorList = []
@@ -60,6 +75,8 @@ const validateEmail = async (email, errorList) => {
 
 // READ
 export const getUser = async (req, res) => {
+  /* #swagger.tags = ['Users']
+    #swagger.description = 'Obtiene usuario por su id.' */
   try {
     // credentials
     const { userId } = req.query
@@ -84,6 +101,7 @@ export const getUser = async (req, res) => {
 }
 
 export const getAllUsers = async (req, res) => {
+  // #swagger.tags = ['Users']
   try {
     // validate role
     const { userId } = req.query
@@ -110,6 +128,25 @@ export const isAdmin = async (userId) => {
 
 // UPDATE
 export const updateUser = async (req, res) => {
+  /* #swagger.tags = ['Users']
+    #swagger.description = 'Actualiza los datos del usuario.' */
+  /*  #swagger.parameters['userId'] = {
+            in: 'query',
+            description: 'User id',
+            type: 'number'
+    } */
+  /*  #swagger.parameters['body'] = {
+            in: 'body',
+            schema: {
+                $name: 'Gabriel Ferrin',
+                $email: 'gabriel@ferrin.com',
+                $password: '12345678',
+                $role_id: 1,
+                $country_id: 1,
+                $bio: 'bio',
+                $image: 'image'
+            }
+    } */
   let message = 'User id is required'
   try {
     const { userId } = req.query // credentials
@@ -181,8 +218,9 @@ const validateEmailUpdate = async (userId, email, errorList) => {
 
 // DELETE
 export const deleteUser = async (req, res) => {
-  // delete user's own acount
+  // #swagger.tags = ['Users']
   try {
+    // delete user's own acount
     const { userId } = req.query
     if (!userId) {
       const message = 'User id is required'

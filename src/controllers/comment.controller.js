@@ -1,6 +1,16 @@
 import sql from '../db-config.js'
 
 export const createComment = (req, res) => {
+  /* #swagger.tags = ['Comentarios']
+    #swagger.description = 'Crea un nuevo comentario.' */
+  /*  #swagger.parameters['body'] = {
+            in: 'body',
+            schema: {
+                $user_id: 14,
+                $post_id: 14,
+                $content: 'I dont agree. Its the easiest thing!'
+            }
+    } */
   let message = 'Missing information'
   try {
     // validate fields
@@ -28,6 +38,8 @@ const validateFields = async (body, errorList) => {
 
 // READ
 export const getComments = async (req, res) => {
+  /* #swagger.tags = ['Comentarios']
+    #swagger.description = 'Devuelve los comentarios de una publicación.' */
   let message = 'Missing information'
   try {
     const { postId } = req.query
@@ -46,6 +58,24 @@ export const getComments = async (req, res) => {
 
 // UPDATE
 export const updateComment = async (req, res) => {
+  /* #swagger.tags = ['Comentarios']
+    #swagger.description = 'Actualiza un comentario.' */
+  /*  #swagger.parameters['userId'] = {
+            in: 'query',
+            description: 'User id',
+            type: 'number'
+    } */
+  /*  #swagger.parameters['commentId'] = {
+            in: 'query',
+            description: 'Comment id',
+            type: 'number'
+    } */
+  /*  #swagger.parameters['body'] = {
+            in: 'body',
+            schema: {
+                $content: 'I agree. Its the easiest thing!'
+            }
+    } */
   try {
     const { userId, commentId } = req.query
     if (!userId || !commentId || !req.body.content) {
@@ -55,7 +85,7 @@ export const updateComment = async (req, res) => {
     // verify if user is the comment owner
     const ouwnership = await verifyOwnership(userId, commentId)
     if (!ouwnership.success) {
-      return res.status(401).json(ouwnership)
+      return res.status(404).json(ouwnership)
     }
     // update comment
     const query = 'UPDATE comment SET ? WHERE comment_id = ? and user_id = ?'
@@ -68,11 +98,13 @@ export const updateComment = async (req, res) => {
   }
 }
 
-export const verifyOwnership = async (userId, commentId) => {
+const verifyOwnership = async (userId, commentId) => {
+  console.log(userId, commentId)
+  console.log('user id', userId, 'comment id', commentId)
   const query = 'SELECT user_id FROM comment WHERE comment_id = ?'
   const [result] = await sql.query(query, [commentId])
-  console.log(result[0].user_id, userId)
-  if (result[0].user_id.toString() !== userId) {
+  console.log(result)
+  if (result[0]?.user_id.toString() !== userId || result.length === 0) {
     const message = 'The user is not the owner of this comment'
     return { success: false, message }
   } else {
@@ -82,6 +114,8 @@ export const verifyOwnership = async (userId, commentId) => {
 
 // DELETE
 export const deleteComment = async (req, res) => {
+  /* #swagger.tags = ['Comentarios']
+    #swagger.description = 'Elimina un comentario.' */
   try {
     const { userId, commentId } = req.query
     if (!userId || !commentId) {

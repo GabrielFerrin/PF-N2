@@ -57,8 +57,8 @@ export const createUserTable = async () => {
       date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
       date_updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
       PRIMARY KEY (user_id),
-      FOREIGN KEY (role_id) REFERENCES role(role_id) ON UPDATE CASCADE ON DELETE RESTRICT,
-      FOREIGN KEY (country_id) REFERENCES country(country_id) ON UPDATE CASCADE ON DELETE RESTRICT
+      FOREIGN KEY (role_id) REFERENCES role(role_id) ON UPDATE CASCADE ON DELETE CASCADE,
+      FOREIGN KEY (country_id) REFERENCES country(country_id) ON UPDATE CASCADE ON DELETE CASCADE
     );`
     await sql.execute(query)
     console.log({ message: 'User table created' })
@@ -79,7 +79,7 @@ export const createPostTable = async () => {
       date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
       date_updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
       PRIMARY KEY (post_id),
-      FOREIGN KEY (user_id) REFERENCES user(user_id) ON UPDATE CASCADE ON DELETE RESTRICT
+      FOREIGN KEY (user_id) REFERENCES user(user_id) ON UPDATE CASCADE ON DELETE CASCADE
     );`
     await sql.execute(query)
     console.log({ message: 'Post table created' })
@@ -99,7 +99,7 @@ export const createPostImageTable = async () => {
       date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
       date_updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
       PRIMARY KEY (post_image_id),
-      FOREIGN KEY (post_id) REFERENCES post(post_id) ON UPDATE CASCADE ON DELETE RESTRICT
+      FOREIGN KEY (post_id) REFERENCES post(post_id) ON UPDATE CASCADE ON DELETE CASCADE
     );`
     await sql.execute(query)
     console.log({ message: 'Post image table created' })
@@ -120,8 +120,8 @@ export const createCommentTable = async () => {
       date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
       date_updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
       PRIMARY KEY (comment_id),
-      FOREIGN KEY (post_id) REFERENCES post(post_id) ON UPDATE CASCADE ON DELETE RESTRICT,
-      FOREIGN KEY (user_id) REFERENCES user(user_id) ON UPDATE CASCADE ON DELETE RESTRICT
+      FOREIGN KEY (post_id) REFERENCES post(post_id) ON UPDATE CASCADE ON DELETE CASCADE,
+      FOREIGN KEY (user_id) REFERENCES user(user_id) ON UPDATE CASCADE ON DELETE CASCADE
     );`
     await sql.execute(query)
     console.log({ message: 'Comment table created' })
@@ -156,8 +156,8 @@ export const createPostCategoryTable = async () => {
       post_id INT NOT NULL,
       date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
       date_updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-      FOREIGN KEY (post_id) REFERENCES post(post_id) ON UPDATE CASCADE ON DELETE RESTRICT,
-      FOREIGN KEY (category_id) REFERENCES category(category_id) ON UPDATE CASCADE ON DELETE RESTRICT
+      FOREIGN KEY (post_id) REFERENCES post(post_id) ON UPDATE CASCADE ON DELETE CASCADE,
+      FOREIGN KEY (category_id) REFERENCES category(category_id) ON UPDATE CASCADE ON DELETE CASCADE
     );`
     await sql.execute(query)
     console.log({ message: 'Category post table created' })

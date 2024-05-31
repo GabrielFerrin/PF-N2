@@ -2,18 +2,29 @@ import sql from '../db-config.js'
 
 // CREATE
 export const createPost = async (req, res) => {
+  /* #swagger.tags = ['Publicaciones']
+    #swagger.description = 'Crea una nueva categoria.' */
+  /*  #swagger.parameters['body'] = {
+            in: 'body',
+            schema: {
+                $title: 'La política es muy sucia',
+                $content: 'Es solo mi manera de pensar',
+                $user_id: 14,
+                $categories: [
+                  {
+                    $category_id: 3,
+                  }
+                ]
+            }
+    } */
   let message = 'Missing user id'
   try {
-    const { userId } = req.query // credentials
-    if (!userId) {
-      return res.status(400).json({ success: false, message })
-    }
     // validate categories
     const errorList = []
     const { categories } = req.body
     await validateCategories(categories, errorList)
     // validate body
-    await validateFields(req.body, userId, errorList)
+    await validateFields(req.body, errorList)
     if (errorList.length > 0) {
       message = 'Invalid body'
       return res.status(400).json({ success: false, message, errorList })
@@ -47,18 +58,13 @@ export const createPost = async (req, res) => {
   }
 }
 
-const validateFields = async (body, userId, errorList) => {
+const validateFields = async (body, errorList) => {
   try {
     // validate required fields
     if (!body.title) errorList.push('Title is required')
     if (!body.content) errorList.push('Content is required')
     if (!body.user_id) errorList.push('User id is required')
-    const message = 'Aunothorized procedure. Id conflict.'
-    if (body.user_id !== userId) errorList.push(message)
     // validate user id
-    const query = 'SELECT * FROM user WHERE user_id = ?'
-    const [user] = await sql.execute(query, [userId])
-    if (user.length === 0) errorList.push('Invalid user id')
   } catch (error) {
     errorList.push(error.message)
   }
@@ -79,6 +85,8 @@ const validateCategories = async (categories, errorList) => {
 
 // READ
 export const getAllPosts = async (req, res) => {
+  /* #swagger.tags = ['Publicaciones']
+    #swagger.description = 'Devuelve todas las publicaciones.' */
   try {
     let query = 'SELECT * FROM v_post'
     const [results] = await sql.execute(query)
@@ -107,6 +115,8 @@ export const getAllPosts = async (req, res) => {
 }
 
 export const getPostsByCategory = async (req, res) => {
+  /* #swagger.tags = ['Publicaciones']
+    #swagger.description = 'Devuelve las publicaciones de una categoria.' */
   try {
     const { categoryId } = req.query
     const query = 'SELECT * FROM v_post_by_cat WHERE category_id = ?'
@@ -119,6 +129,8 @@ export const getPostsByCategory = async (req, res) => {
 }
 
 export const getPostsByTitle = async (req, res) => {
+  /* #swagger.tags = ['Publicaciones']
+    #swagger.description = 'Devuelve las publicaciones que contengan la palabra clave.' */
   try {
     let { title } = req.query
     title = '%' + title.replace(/ /g, '%') + '%'
@@ -133,25 +145,74 @@ export const getPostsByTitle = async (req, res) => {
 
 // UPDATE
 export const updatePost = async (req, res) => {
+  /* #swagger.tags = ['Publicaciones']
+    #swagger.description = 'Actualiza una publicación.' */
+  /*  #swagger.parameters['userId'] = {
+      in: 'query',
+      description: 'User id',
+      type: 'number'
+    } */
+  /*  #swagger.parameters['postId'] = {
+      in: 'query',
+      description: 'Post id',
+      type: 'number'
+    } */
+  /*  #swagger.parameters['body'] = {
+              in: 'body',
+              schema: {
+                  $title: 'I love sports',
+                  $content: 'Im retaking golf. I used to play a lot!'
+              }
+      } */
+  let message = 'Missing information'
   try {
     const { userId, postId } = req.query // credentials
     if (!userId || !postId) {
-      const message = 'Missing information'
+      return res.status(404).json({ success: false, message })
+    }
+    const ouwnership = await verifyOwnership(userId, postId)
+    if (!ouwnership.success) {
+      return res.status(404).json(ouwnership)
+    }
+    if (!req.body.title && !req.body.content) {
+      console.log(req.body)
+      message = 'Iformation to update is missing'
       return res.status(404).json({ success: false, message })
     }
     // update post
-    const query = 'UPDATE post SET ? WHERE user_id = ? AND post_id'
-    await sql.query(query, [req.body, userId, postId])
-    const message = 'Post updated'
+    const query = 'UPDATE post SET ? WHERE user_id = ? AND post_id = ?'
+    await sql.query(query, [req.body, parseInt(userId), parseInt(postId)])
+    message = 'Post updated'
     return res.json({ success: true, message })
   } catch (error) {
-    const message = 'Error updating post'
-    return res.status(500).json({ success: false, message, error })
+    console.log(error)
+    message = 'Error updating post'
+    return res.status(500).json({
+      success: false,
+      message,
+      error: error.stack
+    })
+  }
+}
+
+const verifyOwnership = async (userId, postId) => {
+  console.log(userId, postId)
+  console.log('user id', userId, 'post id', postId)
+  const query = 'SELECT user_id FROM post WHERE post_id = ?'
+  const [result] = await sql.query(query, [postId])
+  console.log(result)
+  if (result[0]?.user_id.toString() !== userId || result.length === 0) {
+    const message = 'The user is not the owner of this post'
+    return { success: false, message }
+  } else {
+    return { success: true }
   }
 }
 
 // DELETE
 export const deletePost = async (req, res) => {
+  /* #swagger.tags = ['Categorías']
+    #swagger.description = 'Crea una nueva categoria.' */
   try {
     const { userId, postId } = req.query // credentials
     if (!userId || !postId) {
