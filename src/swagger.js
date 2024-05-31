@@ -6,8 +6,7 @@ const doc = {
     description: 'Proyecto Final Nivel 2'
   },
   host: 'pf-n2.onrender.com',
-  ignore: ['origin', 'host']
-  // host: 'pf-n2.onrender.com'
+  schemes: ['https']
 }
 
 const outputFile = './swagger-output.json'

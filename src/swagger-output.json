@@ -175,7 +175,7 @@
                 },
                 "bio": {
                   "type": "string",
-                  "example": "bio"
+                  "example": "I was born and raised in a family of artists. I studied architecture in college and have been working as an architect for a local architecture firm for the past 3 years. In my free time, I enjoy painting and playing the guitar."
                 },
                 "image": {
                   "type": "string",

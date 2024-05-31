@@ -143,7 +143,7 @@ export const updateUser = async (req, res) => {
                 $password: '12345678',
                 $role_id: 1,
                 $country_id: 1,
-                $bio: 'bio',
+                $bio: 'I was born and raised in a family of artists. I studied architecture in college and have been working as an architect for a local architecture firm for the past 3 years. In my free time, I enjoy painting and playing the guitar.',
                 $image: 'image'
             }
     } */
