@@ -5,7 +5,7 @@ const doc = {
     title: 'Sistema de Blogging FUNVAL',
     description: 'Proyecto Final Nivel 2'
   },
-  host: 'localhost:3011',
+  host: 'pf-n2.onrender.com',
   ignore: ['origin', 'host']
   // host: 'pf-n2.onrender.com'
 }
