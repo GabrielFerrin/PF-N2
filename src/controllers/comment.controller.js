@@ -21,6 +21,7 @@ export const createComment = (req, res) => {
       return res.status(400).json({ success: false, message, errorList })
     }
     // create comment
+    console.log(req.body)
     const query = 'INSERT INTO comment SET ?'
     sql.query(query, [req.body])
     res.json({ success: true, message: 'Comment created' })
