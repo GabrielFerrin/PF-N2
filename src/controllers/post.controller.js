@@ -205,13 +205,17 @@ const verifyOwnership = async (userId, postId) => {
 
 // DELETE
 export const deletePost = async (req, res) => {
-  /* #swagger.tags = ['Categorías']
-    #swagger.description = 'Crea una nueva categoria.' */
+  /* #swagger.tags = ['Publicaciones']
+    #swagger.description = 'Elimina una publicación.' */
   try {
     const { userId, postId } = req.query // credentials
     if (!userId || !postId) {
       const message = 'Missing information'
       return res.status(404).json({ success: false, message })
+    }
+    const ouwnership = await verifyOwnership(userId, postId)
+    if (!ouwnership.success) {
+      return res.status(404).json(ouwnership)
     }
     // delete post
     const query = 'DELETE FROM post WHERE user_id = ? AND post_id = ?'

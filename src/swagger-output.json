@@ -436,9 +436,9 @@
       },
       "delete": {
         "tags": [
-          "Categorías"
+          "Publicaciones"
         ],
-        "description": "Crea una nueva categoria.",
+        "description": "Elimina una publicación.",
         "parameters": [
           {
             "name": "origin",
@@ -1008,9 +1008,5 @@
         }
       }
     }
-  },
-  "ignore": [
-    "origin",
-    "host"
-  ]
+  }
 }
